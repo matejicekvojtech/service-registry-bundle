@@ -3,7 +3,7 @@
 namespace MV\ServiceRegistryBundle\DependencyInjection;
 
 use MV\ServiceRegistryBundle\Attribute\ServiceInRegistry;
-use MV\ServiceRegistryBundle\Registry\ServiceServiceRegistry;
+use MV\ServiceRegistryBundle\Registry\ServiceRegistry;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -52,7 +52,7 @@ class ServiceRegistryPass implements CompilerPassInterface
                 static fn ($a, $b) => $b['priority'] <=> $a['priority'],
             );
 
-            $definition = new Definition(ServiceServiceRegistry::class, [
+            $definition = new Definition(ServiceRegistry::class, [
                 array_map(
                     static fn (array $service) => new Reference($service['id']),
                     $services,
