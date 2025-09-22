@@ -5,9 +5,9 @@ namespace MV\ServiceRegistryBundle\Registry;
 
 /**
  * @template T of object
- * @implements RegistryInterface<T>
+ * @implements ServiceRegistryInterface<T>
  */
-class ServiceRegistry implements RegistryInterface
+class ServiceServiceRegistry implements ServiceRegistryInterface
 {
     /**
      * @var iterable<class-string, T>

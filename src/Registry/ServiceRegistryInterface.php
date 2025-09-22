@@ -6,7 +6,7 @@ namespace MV\ServiceRegistryBundle\Registry;
 /**
  * @template T of object
  */
-interface RegistryInterface
+interface ServiceRegistryInterface
 {
     /**
      * @return iterable<class-string<T>, T>

@@ -2,9 +2,8 @@
 
 namespace MV\ServiceRegistryBundle\DependencyInjection;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use MV\ServiceRegistryBundle\Attribute\ServiceInRegistry;
-use MV\ServiceRegistryBundle\Registry\ServiceRegistry;
+use MV\ServiceRegistryBundle\Registry\ServiceServiceRegistry;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,7 +19,6 @@ class ServiceRegistryPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $registries = [];
-        $annotationReader = class_exists(AnnotationReader::class) ? new AnnotationReader() : null;
 
         foreach ($container->getDefinitions() as $id => $definition) {
             $class = $definition->getClass();
@@ -34,13 +32,6 @@ class ServiceRegistryPass implements CompilerPassInterface
                 /** @var ServiceInRegistry $meta */
                 $meta = $attribute->newInstance();
                 $this->addToRegistry($registries, $meta->registry, $id, $meta->priority);
-            }
-
-            if (null !== $annotationReader) {
-                $annotation = $annotationReader->getClassAnnotation($reflection, ServiceInRegistry::class);
-                if ($annotation instanceof ServiceInRegistry) {
-                    $this->addToRegistry($registries, $annotation->registry, $id, $annotation->priority);
-                }
             }
 
             if ($definition->hasTag('mv.service-in-registry')) {
@@ -61,7 +52,7 @@ class ServiceRegistryPass implements CompilerPassInterface
                 static fn ($a, $b) => $b['priority'] <=> $a['priority'],
             );
 
-            $definition = new Definition(ServiceRegistry::class, [
+            $definition = new Definition(ServiceServiceRegistry::class, [
                 array_map(
                     static fn (array $service) => new Reference($service['id']),
                     $services,
