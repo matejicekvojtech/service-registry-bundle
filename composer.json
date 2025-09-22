@@ -1,0 +1,30 @@
+{
+  "name": "matejicekvojtech/service-registry-bundle",
+  "description": "Service registry bundle for Symfony services",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8",
+    "symfony/dependency-injection": "^6.0 || ^7.0",
+    "symfony/http-kernel": "^6.0 || ^7.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "doctrine/annotations": "^2.0",
+    "phpstan/phpstan": "^1.11",
+    "vimeo/psalm": "*",
+    "symfony/framework-bundle": "^6.0 || ^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MV\\ServiceRegistryBundle\\": "src/"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "bundle": "MV\\ServiceRegistry\\ServiceRegistryBundle"
+    }
+  }
+}
